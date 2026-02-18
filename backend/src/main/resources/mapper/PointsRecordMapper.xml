@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuedong.mapper.PointsRecordMapper">
+
+    <select id="selectPageWithUser" resultType="com.yuedong.entity.PointsRecord">
+        SELECT pr.*, u.username, u.nickname
+        FROM points_record pr
+        LEFT JOIN `user` u ON pr.user_id = u.id
+        <where>
+            <if test="userId != null">AND pr.user_id = #{userId}</if>
+            <if test="type != null and type != ''">AND pr.type = #{type}</if>
+        </where>
+        ORDER BY pr.create_time DESC
+    </select>
+
+</mapper>

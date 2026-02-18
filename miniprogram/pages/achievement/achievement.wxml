@@ -1,0 +1,66 @@
+<view class="page">
+  <!-- Header -->
+  <view class="header-bg">
+    <view class="header-content">
+      <text class="header-title">成就徽章</text>
+      <text class="header-count">已解锁 {{unlockedCount}}/{{totalCount}}</text>
+    </view>
+  </view>
+
+  <!-- Achievement Grid -->
+  <view class="body">
+    <view class="achievement-grid">
+      <view
+        class="achievement-item {{item.unlocked ? 'unlocked' : 'locked'}}"
+        wx:for="{{achievements}}"
+        wx:key="id"
+        bindtap="showAchievementDetail"
+        data-index="{{index}}"
+      >
+        <view class="badge-icon-wrap {{item.unlocked ? 'badge-active' : 'badge-gray'}}">
+          <text class="badge-icon">{{item.icon}}</text>
+        </view>
+        <text class="badge-name">{{item.name}}</text>
+        <text class="badge-sub" wx:if="{{item.unlocked}}">{{item.unlockTime}}</text>
+        <block wx:if="{{!item.unlocked}}">
+          <text class="badge-condition">{{item.condition}}</text>
+          <view class="progress-bar">
+            <view class="progress-fill" style="width: {{item.progress}}%"></view>
+          </view>
+          <text class="progress-text">{{item.current}}/{{item.target}}</text>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <!-- Detail Popup -->
+  <view class="popup-mask" wx:if="{{showDetail}}" bindtap="closeDetail">
+    <view class="popup-content" catchtap="">
+      <view class="popup-badge {{currentAchievement.unlocked ? 'badge-active' : 'badge-gray'}}">
+        <text class="popup-icon">{{currentAchievement.icon}}</text>
+      </view>
+      <text class="popup-name">{{currentAchievement.name}}</text>
+      <text class="popup-desc">{{currentAchievement.description}}</text>
+      <view class="popup-divider"></view>
+      <view class="popup-info-row">
+        <text class="popup-label">达成条件</text>
+        <text class="popup-value">{{currentAchievement.condition}}</text>
+      </view>
+      <view class="popup-info-row">
+        <text class="popup-label">奖励积分</text>
+        <text class="popup-value points-color">+{{currentAchievement.rewardPoints}}</text>
+      </view>
+      <view class="popup-info-row" wx:if="{{currentAchievement.unlocked}}">
+        <text class="popup-label">解锁时间</text>
+        <text class="popup-value">{{currentAchievement.unlockTime}}</text>
+      </view>
+      <view class="popup-info-row" wx:if="{{!currentAchievement.unlocked}}">
+        <text class="popup-label">当前进度</text>
+        <text class="popup-value">{{currentAchievement.current}}/{{currentAchievement.target}}</text>
+      </view>
+      <view class="popup-close" bindtap="closeDetail">
+        <text class="popup-close-text">关闭</text>
+      </view>
+    </view>
+  </view>
+</view>

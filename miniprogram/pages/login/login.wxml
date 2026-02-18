@@ -1,0 +1,44 @@
+<view class="container">
+  <!-- Gradient top section -->
+  <view class="header">
+    <view class="header-content">
+      <text class="app-icon">🏃</text>
+      <text class="app-name">悦动打卡</text>
+      <text class="app-slogan">每一步都算数</text>
+    </view>
+  </view>
+
+  <!-- Login card -->
+  <view class="card">
+    <view class="input-group">
+      <view class="input-wrapper">
+        <image class="input-icon" src="/images/user.png" mode="aspectFit" />
+        <input
+          class="input"
+          placeholder="请输入用户名"
+          placeholder-class="placeholder"
+          value="{{username}}"
+          bindinput="onUsernameInput"
+        />
+      </view>
+      <view class="input-wrapper">
+        <image class="input-icon" src="/images/lock.png" mode="aspectFit" />
+        <input
+          class="input"
+          placeholder="请输入密码"
+          placeholder-class="placeholder"
+          password="{{true}}"
+          value="{{password}}"
+          bindinput="onPasswordInput"
+        />
+      </view>
+    </view>
+
+    <button class="btn-login" bindtap="onLogin">登录</button>
+
+    <view class="register-link" bindtap="goRegister">
+      <text class="link-text">没有账号？</text>
+      <text class="link-highlight">去注册</text>
+    </view>
+  </view>
+</view>

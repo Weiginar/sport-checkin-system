@@ -1,0 +1,213 @@
+.page {
+  min-height: 100vh;
+  background: #f5f6fa;
+}
+
+/* Header */
+.header-bg {
+  background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+  padding: 80rpx 40rpx 50rpx;
+  border-radius: 0 0 40rpx 40rpx;
+}
+
+.header-title {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.header-sub {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 8rpx;
+}
+
+/* Body */
+.body {
+  padding: 30rpx;
+  margin-top: -20rpx;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+  margin-bottom: 24rpx;
+}
+
+.stat-card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 32rpx 24rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+}
+
+.stat-value {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #185a9d;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+}
+
+/* Card */
+.card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 28rpx;
+}
+
+/* Bar Chart (Weekly) */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 320rpx;
+  padding-top: 40rpx;
+}
+
+.bar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.bar-value {
+  font-size: 20rpx;
+  color: #43cea2;
+  margin-bottom: 8rpx;
+  height: 30rpx;
+}
+
+.bar-track {
+  width: 40rpx;
+  height: 200rpx;
+  background: #f0f0f0;
+  border-radius: 20rpx;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+.bar-fill {
+  width: 100%;
+  background: linear-gradient(180deg, #43cea2, #185a9d);
+  border-radius: 20rpx;
+  min-height: 0;
+  transition: height 0.3s;
+}
+
+.bar-label {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 10rpx;
+}
+
+/* Sport Distribution */
+.dist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.dist-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.dist-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8rpx;
+}
+
+.dist-name {
+  font-size: 26rpx;
+  color: #333;
+}
+
+.dist-count {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.dist-bar-track {
+  height: 20rpx;
+  background: #f0f0f0;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+.dist-bar-fill {
+  height: 100%;
+  border-radius: 10rpx;
+  transition: width 0.3s;
+}
+
+/* Recent Trend */
+.trend-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.trend-row {
+  display: flex;
+  align-items: center;
+}
+
+.trend-date {
+  font-size: 22rpx;
+  color: #999;
+  width: 90rpx;
+  flex-shrink: 0;
+}
+
+.trend-bar-track {
+  flex: 1;
+  height: 16rpx;
+  background: #f0f0f0;
+  border-radius: 8rpx;
+  overflow: hidden;
+  margin: 0 12rpx;
+}
+
+.trend-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #43cea2, #185a9d);
+  border-radius: 8rpx;
+  transition: width 0.3s;
+}
+
+.trend-val {
+  font-size: 22rpx;
+  color: #43cea2;
+  width: 50rpx;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Empty */
+.empty-tip {
+  text-align: center;
+  padding: 40rpx 0;
+  color: #ccc;
+  font-size: 26rpx;
+}

@@ -1,0 +1,75 @@
+<view class="page">
+  <!-- Custom Header -->
+  <view class="header">
+    <view class="header-bg">
+      <view class="header-content">
+        <text class="app-title">悦动打卡</text>
+        <text class="greeting">{{greeting}}，{{userInfo.nickname || '运动达人'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="body">
+    <!-- Today Checkin Status Card -->
+    <view class="card status-card">
+      <view class="card-title">今日打卡</view>
+
+      <!-- Not checked in -->
+      <block wx:if="{{!todayStatus.checkedIn}}">
+        <view class="status-empty">
+          <text class="status-text">今日尚未打卡</text>
+          <text class="status-sub">运动一下，开启元气满满的一天</text>
+          <view class="btn-checkin" bindtap="goCheckin">去打卡</view>
+        </view>
+      </block>
+
+      <!-- Already checked in -->
+      <block wx:else>
+        <view class="status-done">
+          <view class="done-icon">✅</view>
+          <view class="done-info">
+            <text class="done-sport">{{todayStatus.sportName}}</text>
+            <view class="done-details">
+              <text>{{todayStatus.duration}}分钟</text>
+              <text class="dot">·</text>
+              <text>{{todayStatus.calories}}千卡</text>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!-- Stats Overview -->
+    <view class="stats-row">
+      <view class="stat-card">
+        <text class="stat-num">{{stats.consecutiveDays || 0}}</text>
+        <text class="stat-label">连续打卡天数</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-num">{{stats.totalCheckins || 0}}</text>
+        <text class="stat-label">累计打卡次数</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-num">{{stats.totalPoints || 0}}</text>
+        <text class="stat-label">总积分</text>
+      </view>
+    </view>
+
+    <!-- Sport Quick Entry Grid -->
+    <view class="card sport-card">
+      <view class="card-title">选择运动</view>
+      <view class="sport-grid">
+        <view
+          class="sport-item"
+          wx:for="{{sportList}}"
+          wx:key="id"
+          bindtap="goCheckin"
+          data-id="{{item.id}}"
+        >
+          <view class="sport-icon">{{item.icon}}</view>
+          <text class="sport-name">{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

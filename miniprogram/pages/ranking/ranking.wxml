@@ -1,0 +1,75 @@
+<view class="page">
+  <!-- Tab Switch -->
+  <view class="tab-bar">
+    <view
+      class="tab-item {{currentTab === 'week' ? 'tab-active' : ''}}"
+      bindtap="switchTab"
+      data-tab="week"
+    >
+      <text class="tab-text">本周</text>
+      <view class="tab-indicator" wx:if="{{currentTab === 'week'}}"></view>
+    </view>
+    <view
+      class="tab-item {{currentTab === 'month' ? 'tab-active' : ''}}"
+      bindtap="switchTab"
+      data-tab="month"
+    >
+      <text class="tab-text">本月</text>
+      <view class="tab-indicator" wx:if="{{currentTab === 'month'}}"></view>
+    </view>
+  </view>
+
+  <!-- Top 3 Podium -->
+  <view class="top3-area" wx:if="{{rankList.length >= 3}}">
+    <!-- 2nd Place -->
+    <view class="top3-item silver">
+      <view class="top3-rank-badge silver-bg">2</view>
+      <image class="top3-avatar" src="{{rankList[1].avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <text class="top3-name">{{rankList[1].nickname}}</text>
+      <text class="top3-count">{{rankList[1].checkinCount}}次</text>
+    </view>
+    <!-- 1st Place -->
+    <view class="top3-item gold">
+      <view class="top3-rank-badge gold-bg">1</view>
+      <image class="top3-avatar top3-avatar-first" src="{{rankList[0].avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <text class="top3-name">{{rankList[0].nickname}}</text>
+      <text class="top3-count">{{rankList[0].checkinCount}}次</text>
+    </view>
+    <!-- 3rd Place -->
+    <view class="top3-item bronze">
+      <view class="top3-rank-badge bronze-bg">3</view>
+      <image class="top3-avatar" src="{{rankList[2].avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <text class="top3-name">{{rankList[2].nickname}}</text>
+      <text class="top3-count">{{rankList[2].checkinCount}}次</text>
+    </view>
+  </view>
+
+  <!-- Rank List (4th and below) -->
+  <view class="rank-list" wx:if="{{rankList.length > 3}}">
+    <view
+      class="rank-item {{item.isMe ? 'rank-item-me' : ''}}"
+      wx:for="{{rankList}}"
+      wx:key="userId"
+      wx:if="{{index >= 3}}"
+    >
+      <text class="rank-num">{{index + 1}}</text>
+      <image class="rank-avatar" src="{{item.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <text class="rank-name">{{item.nickname}}</text>
+      <text class="rank-count">{{item.checkinCount}}次</text>
+    </view>
+  </view>
+
+  <!-- Empty State -->
+  <view class="empty-state" wx:if="{{rankList.length === 0 && !loading}}">
+    <text class="empty-icon">🏆</text>
+    <text class="empty-text">暂无排行数据</text>
+  </view>
+
+  <!-- Bottom Fixed Bar -->
+  <view class="bottom-bar" wx:if="{{myRank > 0}}">
+    <text class="bottom-text">我的排名：第{{myRank}}名</text>
+  </view>
+
+  <!-- Spacer for bottom bar -->
+  <view style="height: 120rpx;" wx:if="{{myRank > 0}}"></view>
+</view>

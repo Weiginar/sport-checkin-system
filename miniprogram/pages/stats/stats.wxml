@@ -1,0 +1,75 @@
+<view class="page">
+  <!-- Header -->
+  <view class="header-bg">
+    <view class="header-title">数据统计</view>
+    <view class="header-sub">你的运动数据一览</view>
+  </view>
+
+  <view class="body">
+    <!-- Top Stats Cards -->
+    <view class="stats-grid">
+      <view class="stat-card">
+        <view class="stat-value">{{stats.totalCheckins || 0}}</view>
+        <view class="stat-label">总打卡次数</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-value">{{stats.consecutiveDays || 0}}</view>
+        <view class="stat-label">连续打卡天数</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-value">{{stats.maxConsecutive || 0}}</view>
+        <view class="stat-label">最长连续</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-value">{{stats.totalDuration || 0}}</view>
+        <view class="stat-label">总运动时长(分)</view>
+      </view>
+    </view>
+
+    <!-- Weekly Duration -->
+    <view class="card">
+      <view class="card-title">近7天运动时长</view>
+      <view class="bar-chart">
+        <view class="bar-item" wx:for="{{weeklyData}}" wx:key="date">
+          <view class="bar-value">{{item.duration > 0 ? item.duration + '分' : ''}}</view>
+          <view class="bar-track">
+            <view class="bar-fill" style="height: {{item.percent}}%;"></view>
+          </view>
+          <view class="bar-label">{{item.label}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- Sport Distribution -->
+    <view class="card">
+      <view class="card-title">运动类型分布</view>
+      <view class="dist-list">
+        <view class="dist-item" wx:for="{{sportDistribution}}" wx:key="name">
+          <view class="dist-header">
+            <text class="dist-name">{{item.icon}} {{item.name}}</text>
+            <text class="dist-count">{{item.count}}次</text>
+          </view>
+          <view class="dist-bar-track">
+            <view class="dist-bar-fill" style="width: {{item.percent}}%; background: {{item.color}};"></view>
+          </view>
+        </view>
+      </view>
+      <view class="empty-tip" wx:if="{{sportDistribution.length === 0}}">暂无数据</view>
+    </view>
+
+    <!-- Recent Trend -->
+    <view class="card">
+      <view class="card-title">近30天趋势</view>
+      <view class="trend-chart">
+        <view class="trend-row" wx:for="{{recentTrend}}" wx:key="date">
+          <view class="trend-date">{{item.label}}</view>
+          <view class="trend-bar-track">
+            <view class="trend-bar-fill" style="width: {{item.percent}}%;"></view>
+          </view>
+          <view class="trend-val">{{item.count}}</view>
+        </view>
+      </view>
+      <view class="empty-tip" wx:if="{{recentTrend.length === 0}}">暂无数据</view>
+    </view>
+  </view>
+</view>

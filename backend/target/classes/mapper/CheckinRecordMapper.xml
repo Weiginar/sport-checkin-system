@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuedong.mapper.CheckinRecordMapper">
+
+    <select id="selectPageWithDetail" resultType="com.yuedong.entity.CheckinRecord">
+        SELECT cr.*, st.name as sport_type_name, st.icon as sport_type_icon
+        FROM checkin_record cr
+        LEFT JOIN sport_type st ON cr.sport_type_id = st.id
+        <where>
+            <if test="userId != null">AND cr.user_id = #{userId}</if>
+            <if test="sportTypeId != null">AND cr.sport_type_id = #{sportTypeId}</if>
+            <if test="startDate != null and startDate != ''">AND cr.checkin_date &gt;= #{startDate}</if>
+            <if test="endDate != null and endDate != ''">AND cr.checkin_date &lt;= #{endDate}</if>
+        </where>
+        ORDER BY cr.checkin_date DESC, cr.create_time DESC
+    </select>
+
+    <select id="selectAdminPageWithDetail" resultType="com.yuedong.entity.CheckinRecord">
+        SELECT cr.*, st.name as sport_type_name, st.icon as sport_type_icon,
+               u.username, u.nickname
+        FROM checkin_record cr
+        LEFT JOIN sport_type st ON cr.sport_type_id = st.id
+        LEFT JOIN `user` u ON cr.user_id = u.id
+        <where>
+            <if test="userId != null">AND cr.user_id = #{userId}</if>
+            <if test="sportTypeId != null">AND cr.sport_type_id = #{sportTypeId}</if>
+            <if test="startDate != null and startDate != ''">AND cr.checkin_date &gt;= #{startDate}</if>
+            <if test="endDate != null and endDate != ''">AND cr.checkin_date &lt;= #{endDate}</if>
+        </where>
+        ORDER BY cr.checkin_date DESC, cr.create_time DESC
+    </select>
+
+    <select id="selectWeeklyDuration" resultType="java.util.Map">
+        SELECT checkin_date as `date`, IFNULL(SUM(duration), 0) as duration
+        FROM checkin_record
+        WHERE user_id = #{userId} AND checkin_date >= #{startDate} AND checkin_date &lt;= #{endDate}
+        GROUP BY checkin_date
+        ORDER BY checkin_date
+    </select>
+
+    <select id="selectSportDistribution" resultType="java.util.Map">
+        SELECT st.name, COUNT(*) as count
+        FROM checkin_record cr
+        LEFT JOIN sport_type st ON cr.sport_type_id = st.id
+        WHERE cr.user_id = #{userId}
+        GROUP BY cr.sport_type_id, st.name
+        ORDER BY count DESC
+    </select>
+
+    <select id="selectRecentTrend" resultType="java.util.Map">
+        SELECT checkin_date as `date`, IFNULL(SUM(duration), 0) as duration
+        FROM checkin_record
+        WHERE user_id = #{userId} AND checkin_date >= #{startDate} AND checkin_date &lt;= #{endDate}
+        GROUP BY checkin_date
+        ORDER BY checkin_date
+    </select>
+
+    <select id="selectRanking" resultType="java.util.Map">
+        SELECT cr.user_id as userId, u.nickname, u.avatar, COUNT(*) as checkinCount
+        FROM checkin_record cr
+        LEFT JOIN `user` u ON cr.user_id = u.id
+        WHERE cr.checkin_date >= #{startDate} AND cr.checkin_date &lt;= #{endDate}
+        GROUP BY cr.user_id, u.nickname, u.avatar
+        ORDER BY checkinCount DESC
+        LIMIT 50
+    </select>
+
+</mapper>

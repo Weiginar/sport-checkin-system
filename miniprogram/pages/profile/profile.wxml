@@ -1,0 +1,67 @@
+<view class="page">
+  <!-- Header -->
+  <view class="header">
+    <view class="header-bg"></view>
+    <view class="user-section">
+      <image class="avatar" src="{{userInfo.avatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="nickname">{{userInfo.nickname || '未登录'}}</view>
+      <view class="points-row">
+        <text class="points-icon">💎</text>
+        <text class="points-num">{{userInfo.points || 0}}</text>
+        <text class="points-label">积分</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Stats Card -->
+  <view class="stats-card">
+    <view class="stats-item">
+      <view class="stats-num">{{userInfo.totalCheckins || 0}}</view>
+      <view class="stats-label">累计打卡</view>
+    </view>
+    <view class="stats-item">
+      <view class="stats-num">{{userInfo.consecutiveDays || 0}}</view>
+      <view class="stats-label">连续天数</view>
+    </view>
+    <view class="stats-item">
+      <view class="stats-num">{{userInfo.maxConsecutive || 0}}</view>
+      <view class="stats-label">最长连续</view>
+    </view>
+    <view class="stats-item">
+      <view class="stats-num">{{userInfo.totalDuration || 0}}</view>
+      <view class="stats-label">总时长(分)</view>
+    </view>
+  </view>
+
+  <!-- Menu List -->
+  <view class="menu-card">
+    <view class="menu-item" bindtap="goPage" data-url="/pages/stats/stats">
+      <text class="menu-icon">📊</text>
+      <text class="menu-text">数据统计</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goPage" data-url="/pages/profile-edit/profile-edit">
+      <text class="menu-icon">✏️</text>
+      <text class="menu-text">编辑资料</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goPage" data-url="/pages/points/points">
+      <text class="menu-icon">💰</text>
+      <text class="menu-text">积分明细</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goPage" data-url="/pages/achievement/achievement">
+      <text class="menu-icon">🏆</text>
+      <text class="menu-text">成就徽章</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item menu-item-last" bindtap="goPage" data-url="/pages/ranking/ranking">
+      <text class="menu-icon">🏅</text>
+      <text class="menu-text">排行榜</text>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- Logout -->
+  <view class="logout-btn" bindtap="logout">退出登录</view>
+</view>

@@ -1,0 +1,54 @@
+<view class="page">
+  <!-- Header -->
+  <view class="header-bg">
+    <view class="header-title">打卡记录</view>
+    <view class="month-nav">
+      <view class="nav-btn" bindtap="prevMonth">＜</view>
+      <view class="nav-label">{{currentYear}}年{{currentMonth}}月</view>
+      <view class="nav-btn" bindtap="nextMonth">＞</view>
+    </view>
+  </view>
+
+  <!-- Calendar -->
+  <view class="body">
+    <view class="card calendar-card">
+      <view class="weekday-row">
+        <view class="weekday-cell" wx:for="{{['日','一','二','三','四','五','六']}}" wx:key="*this">{{item}}</view>
+      </view>
+      <view class="calendar-grid">
+        <view
+          class="date-cell {{item.isCurrentMonth ? '' : 'other-month'}} {{item.isToday ? 'today' : ''}} {{item.isChecked ? 'checked' : ''}}"
+          wx:for="{{calendarDays}}"
+          wx:key="index"
+        >
+          <text class="date-num">{{item.day}}</text>
+          <view class="check-dot" wx:if="{{item.isChecked && item.isCurrentMonth}}"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- Record List -->
+    <view class="section-title">打卡详情</view>
+    <view class="record-card" wx:for="{{records}}" wx:key="id">
+      <view class="record-icon">{{item.sportIcon}}</view>
+      <view class="record-info">
+        <view class="record-name">{{item.sportName}}</view>
+        <view class="record-date">{{item.checkinDate}}</view>
+      </view>
+      <view class="record-stats">
+        <view class="record-duration">{{item.duration}}分钟</view>
+        <view class="record-calories">{{item.calories}}千卡</view>
+      </view>
+    </view>
+
+    <view class="empty-tip" wx:if="{{!loading && records.length === 0}}">
+      <text>暂无打卡记录</text>
+    </view>
+
+    <view class="load-more" wx:if="{{records.length > 0}}">
+      <text wx:if="{{loading}}">加载中...</text>
+      <text wx:elif="{{!hasMore}}">— 没有更多了 —</text>
+      <text wx:else>上拉加载更多</text>
+    </view>
+  </view>
+</view>

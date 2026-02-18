@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yuedong.mapper.StatsMapper">
+
+    <select id="countTodayCheckins" resultType="int">
+        SELECT COUNT(*) FROM checkin_record WHERE checkin_date = CURDATE()
+    </select>
+
+    <select id="countActiveUsers" resultType="int">
+        SELECT COUNT(DISTINCT user_id) FROM checkin_record WHERE checkin_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+    </select>
+
+    <select id="countTodayNewUsers" resultType="int">
+        SELECT COUNT(*) FROM `user` WHERE DATE(create_time) = CURDATE() AND role = 'USER'
+    </select>
+
+    <select id="avgDailyCheckins" resultType="double">
+        SELECT IFNULL(AVG(cnt), 0) FROM (
+            SELECT COUNT(*) as cnt FROM checkin_record
+            WHERE checkin_date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+            GROUP BY checkin_date
+        ) t
+    </select>
+
+    <select id="dailyCheckinTrend" resultType="java.util.Map">
+        SELECT checkin_date as `date`, COUNT(*) as count
+        FROM checkin_record
+        WHERE checkin_date >= DATE_SUB(CURDATE(), INTERVAL #{days} DAY)
+        GROUP BY checkin_date
+        ORDER BY checkin_date
+    </select>
+
+    <select id="sportDistributionAll" resultType="java.util.Map">
+        SELECT st.name, COUNT(*) as count
+        FROM checkin_record cr
+        LEFT JOIN sport_type st ON cr.sport_type_id = st.id
+        WHERE cr.checkin_date >= DATE_SUB(CURDATE(), INTERVAL #{days} DAY)
+        GROUP BY cr.sport_type_id, st.name
+        ORDER BY count DESC
+    </select>
+
+    <select id="userGrowthTrend" resultType="java.util.Map">
+        SELECT DATE(create_time) as `date`, COUNT(*) as newUsers
+        FROM `user`
+        WHERE role = 'USER' AND create_time >= DATE_SUB(CURDATE(), INTERVAL #{days} DAY)
+        GROUP BY DATE(create_time)
+        ORDER BY `date`
+    </select>
+
+</mapper>

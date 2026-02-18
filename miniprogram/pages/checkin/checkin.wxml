@@ -1,0 +1,124 @@
+<view class="page">
+  <!-- Custom Header -->
+  <view class="header">
+    <view class="header-bg">
+      <text class="header-title">运动打卡</text>
+    </view>
+  </view>
+
+  <view class="body">
+    <!-- Sport Selection - Horizontal Scroll -->
+    <view class="card">
+      <view class="card-title">选择运动类型</view>
+      <scroll-view class="sport-scroll" scroll-x enable-flex>
+        <view
+          class="sport-scroll-item {{selectedSport.id === item.id ? 'active' : ''}}"
+          wx:for="{{sportList}}"
+          wx:key="id"
+          bindtap="selectSport"
+          data-index="{{index}}"
+        >
+          <view class="scroll-icon">{{item.icon}}</view>
+          <text class="scroll-name">{{item.name}}</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- Data Input Card -->
+    <view class="card">
+      <view class="card-title">运动数据</view>
+
+      <!-- Duration -->
+      <view class="form-row">
+        <text class="form-label">运动时长</text>
+        <view class="form-value">
+          <text class="duration-num">{{duration}}</text>
+          <text class="form-unit">分钟</text>
+        </view>
+      </view>
+      <slider
+        class="duration-slider"
+        min="1"
+        max="180"
+        value="{{duration}}"
+        activeColor="#f5af19"
+        block-size="22"
+        bindchanging="onDurationChange"
+        bindchange="onDurationChange"
+      />
+
+      <!-- Distance (optional) -->
+      <view class="form-row">
+        <text class="form-label">运动距离（选填）</text>
+        <view class="form-input-wrap">
+          <input
+            class="form-input"
+            type="digit"
+            placeholder="0.00"
+            value="{{distance}}"
+            bindinput="onDistanceInput"
+          />
+          <text class="form-unit">公里</text>
+        </view>
+      </view>
+
+      <!-- Calories -->
+      <view class="form-row">
+        <text class="form-label">消耗热量</text>
+        <view class="form-input-wrap">
+          <input
+            class="form-input"
+            type="digit"
+            placeholder="0"
+            value="{{calories}}"
+            bindinput="onCaloriesInput"
+          />
+          <text class="form-unit">千卡</text>
+        </view>
+      </view>
+
+      <!-- Remark -->
+      <view class="form-row remark-row">
+        <text class="form-label">备注（选填）</text>
+      </view>
+      <textarea
+        class="remark-input"
+        placeholder="记录一下今天的运动感受吧~"
+        maxlength="200"
+        value="{{remark}}"
+        bindinput="onRemarkInput"
+      />
+    </view>
+
+    <!-- Submit Button -->
+    <view
+      class="btn-submit {{todayChecked ? 'disabled' : ''}}"
+      bindtap="doCheckin"
+    >
+      {{todayChecked ? '今日已打卡' : '打卡'}}
+    </view>
+  </view>
+
+  <!-- Success Popup -->
+  <view class="modal-mask" wx:if="{{showSuccess}}" bindtap="closeSuccess">
+    <view class="modal-content" catchtap>
+      <view class="modal-icon">🎉</view>
+      <text class="modal-title">打卡成功</text>
+      <view class="modal-info">
+        <view class="modal-row">
+          <text class="modal-label">获得积分</text>
+          <text class="modal-val">+{{checkinResult.points || 0}}</text>
+        </view>
+        <view class="modal-row">
+          <text class="modal-label">连续打卡</text>
+          <text class="modal-val">{{checkinResult.consecutiveDays || 0}}天</text>
+        </view>
+        <view class="modal-row" wx:if="{{checkinResult.newAchievement}}">
+          <text class="modal-label">新成就</text>
+          <text class="modal-val achievement">🏆 {{checkinResult.newAchievement}}</text>
+        </view>
+      </view>
+      <view class="modal-btn" bindtap="closeSuccess">太棒了</view>
+    </view>
+  </view>
+</view>
